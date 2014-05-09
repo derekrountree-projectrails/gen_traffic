@@ -3,7 +3,7 @@ require "#{Dir::pwd}/support/env"
 $biz_names = []
 $search = {}
 
-IO.readlines("search.txt").each_with_index do |line,i|
+IO.readlines("search.txt").each do |line|
   geo, term = line.split("> ").collect {|i| i.strip }
   $search[geo] = term
 end
