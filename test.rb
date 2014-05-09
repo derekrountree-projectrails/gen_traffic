@@ -1,7 +1,8 @@
 require "#{Dir::pwd}/support/env"
 
-$biz_names = []
-$search = {}
+$biz_names  = []
+$search     = {}
+$loops      = ENV['loops'] || 20
 
 IO.readlines("search.txt").each do |line|
   geo, term = line.split("> ").collect {|i| i.strip }
@@ -45,12 +46,9 @@ def pmp_ad
   end
 end
 
-debug
-
-1.upto(20) do
-  load_search
-  click pmp_ad
+1.upto($loops) do
+  $search.each do |geo,term|
+    load_search(geo, term)
+    click pmp_ad
+  end
 end
-    
-# load_search('Los Angeles, CA', 'Plumbers')
-# click pmp_ad
