@@ -14,7 +14,7 @@ include Capybara::DSL
 include Capybara::Helpers
 # include Capybara::RSpecMatchers
 
-BaseURL = 'http://ypuqa.np.wc1.yellowpages.com'
+BaseURL = 'http://sales.ypuqa.np.wc1.yellowpages.com'
 WaitTime = 15
 Capybara.configure do |config|
   config.match                    = :prefer_exact
@@ -35,11 +35,11 @@ Capybara.register_driver :poltergeist do |app|
     :timeout              => 90,
     :window_size          => [1080, 1920],
     :js                   => true,
-    :inspector            => true,
+    :inspector            => false,
     :js_errors            => false,
     :debug                => false,
-    :phantomjs_options    => ['--load-images=no', 
-                              '--disk-cache=false', 
+    :phantomjs_options    => ['--load-images=yes', 
+                              '--disk-cache=true', 
                               '--ignore-ssl-errors=yes', 
                               '--web-security=no' 
                               ] )
@@ -50,6 +50,6 @@ def show_screen(name='temp.png')
   `open #{name}`
 end
 
-headers = { "Host"        => "sales.ypuqa.np.wc1.yellowpages.com", 
-            "User-Agent"  => "Mozilla/5.0 (Windows NT 6.1\; Win64\; x64\; rv:25.0) Gecko/20100101 Firefox/25.0" }
+visit("about:blank")
+headers = { "User-Agent"  => "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0) Gecko/20100101 Firefox/25.0" }
 page.driver.browser.set_headers(headers)

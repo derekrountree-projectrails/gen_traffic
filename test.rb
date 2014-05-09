@@ -1,5 +1,13 @@
 require "#{Dir::pwd}/support/env"
 
+$biz_names = []
+$search = {}
+
+IO.readlines("search.txt").each_with_index do |line,i|
+  geo, term = line.split("> ").collect {|i| i.strip }
+  $search[geo] = term
+end
+
 def debug
   nil; debugger; nil
 end
@@ -27,6 +35,7 @@ def pmp_ad
     unless candidate.count == 0
       the_link = candidate[rand(candidate.count-1)].find('h3 a')
       puts "[ Using: #{the_link.text} ]"
+      $biz_names << the_link.text
       return the_link
     else
       visit current_path
@@ -36,7 +45,12 @@ def pmp_ad
   end
 end
 
-load_search
-click pmp_ad
-load_search('Los Angeles, CA', 'Plumbers')
-click pmp_ad
+debug
+
+1.upto(20) do
+  load_search
+  click pmp_ad
+end
+    
+# load_search('Los Angeles, CA', 'Plumbers')
+# click pmp_ad
